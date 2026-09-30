@@ -1,12 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import DropSelect from './components/DropSelect.vue'
+</script>
 
 <template>
   <section id="topbar">
     <span id="logo">Arkino</span>
     <nav>
       <a href="">Modelos 3D</a>
-      <dropdow>Materiais</dropdow>
-      <dropdow>Processos</dropdow>
+      <DropSelect
+        label="Materiais"
+        :list="['Material 1', 'Material 2', 'Material 3', 'Material 4']"
+      />
+      <DropSelect
+        label="Processos"
+        :list="['Processo 1', 'Processo 2', 'Processo 3', 'Processo 4']"
+      />
     </nav>
     <div id="searchbar">
       <span class="material-symbols-outlined">search</span>
