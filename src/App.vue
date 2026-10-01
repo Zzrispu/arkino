@@ -79,6 +79,8 @@ import DropSelect from './components/DropSelect.vue'
   align-items: center;
   gap: 1rem;
   color: var(--dust-gray);
+  position: sticky;
+  top: 0;
 
   span#logo {
     color: var(--dust-gray);

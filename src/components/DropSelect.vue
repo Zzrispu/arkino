@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue'
 
 interface Props {
   label: string
@@ -9,10 +9,27 @@ interface Props {
 const { list = [] } = defineProps<Props>()
 
 const isOpen = ref<boolean>(false)
+const dropdownElement = useTemplateRef<HTMLDivElement>('dropdownElement')
+
+const handleClickOutside = (e: MouseEvent) => {
+  if (!isOpen.value) return // se estriver fechado ele não faz nada
+  if (!dropdownElement.value) return // se o dropdownElement não estiver atribuido, também não faz nada
+
+  const target = e.target as Node
+  if (!dropdownElement.value.contains(target)) isOpen.value = false
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.addEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
-  <div class="dropselect-container">
+  <div class="dropselect-container" ref="dropdownElement">
     <button @click="isOpen = !isOpen" :class="isOpen ? 'open' : ''">
       <span>{{ label }}</span>
       <i class="material-symbols-outlined" :class="isOpen ? 'open' : ''">arrow_drop_down</i>
