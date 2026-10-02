@@ -18,7 +18,7 @@ import DropSelect from './components/DropSelect.vue'
     </nav>
     <div id="searchbar">
       <span class="material-symbols-outlined">search</span>
-      <input type="text" placeholder="Pesquise..." />
+      <input id="sb-input" type="text" placeholder="Pesquise..." />
     </div>
   </section>
   <main>
@@ -71,11 +71,9 @@ import DropSelect from './components/DropSelect.vue'
 #topbar {
   background-color: var(--hunter-green);
   width: 100%;
-  height: 4rem;
   display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: auto auto 1fr;
-  padding: 0 4rem;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 0.75rem 4rem;
   align-items: center;
   gap: 1rem;
   color: var(--dust-gray);
@@ -102,7 +100,6 @@ import DropSelect from './components/DropSelect.vue'
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    max-width: 25%;
     width: 100%;
     justify-self: end;
 
@@ -126,7 +123,7 @@ main {
   height: 100%;
   display: grid;
   gap: 4rem;
-  padding: 4rem 6rem;
+  padding: 2rem 3rem;
 
   span {
     max-width: 25%;
@@ -135,7 +132,7 @@ main {
 
   section.items-container {
     background-color: var(--fern);
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 1rem;
 
     h3 {
@@ -147,8 +144,7 @@ main {
 
     div.items-row {
       display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
       gap: 0.25rem;
 
       .item {
@@ -217,5 +213,25 @@ footer {
   background-color: var(--pine-teal);
   min-height: 10rem;
   padding: 2rem 4rem;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  #topbar {
+    padding: 0.25rem 1rem;
+    grid-template-columns: auto auto;
+
+    div#searchbar {
+      grid-column: 1/3;
+    }
+  }
+
+  main {
+    padding: 0 2rem;
+
+    span {
+      max-width: 50%;
+    }
+  }
 }
 </style>
