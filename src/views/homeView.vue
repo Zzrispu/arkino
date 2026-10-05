@@ -1,4 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ItemCard from '@/components/ItemCard.vue'
+
+const defaultItem = {
+  name: 'nome do item',
+  author_name: 'autor do item',
+  thumbnail_url: '/src/assets/imgs/place-holder.jpg',
+  author_profile_url: '/src/assets/imgs/place-holder.jpg',
+}
+</script>
 
 <template>
   <main>
@@ -10,37 +19,13 @@
     <section class="items-container">
       <h3>Populares</h3>
       <div class="items-row">
-        <div v-for="value in 5" :key="'item-' + value" class="item">
-          <div class="item-thumbnail">
-            <img src="@/assets/imgs/place-holder.jpg" alt="place-holder-img" />
-          </div>
-          <h4>Nome do item</h4>
-          <div class="item-details">
-            <div class="author">
-              <div><img src="@/assets/imgs/place-holder.jpg" alt="author-place-holder" /></div>
-              {{ 'Autor-' + value }}
-            </div>
-            <span class="material-symbols-outlined">download</span>
-          </div>
-        </div>
+        <ItemCard :item="defaultItem" v-for="i in 5" />
       </div>
     </section>
     <section class="items-container">
       <h3>Novos</h3>
       <div class="items-row">
-        <div v-for="value in 5" :key="'item-' + value" class="item">
-          <div class="item-thumbnail">
-            <img src="@/assets/imgs/place-holder.jpg" alt="place-holder-img" />
-          </div>
-          <h4>Nome do item</h4>
-          <div class="item-details">
-            <div class="author">
-              <div><img src="@/assets/imgs/place-holder.jpg" alt="author-place-holder" /></div>
-              {{ 'Autor-' + value }}
-            </div>
-            <span class="material-symbols-outlined">download</span>
-          </div>
-        </div>
+        <ItemCard :item="defaultItem" v-for="i in 5" />
       </div>
     </section>
   </main>
@@ -74,65 +59,6 @@ main {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
       gap: 0.25rem;
-
-      .item {
-        padding: 0.75rem;
-        border-radius: 16px;
-        transition: all 0.1s ease-in;
-
-        .item-thumbnail {
-          width: 100%;
-          aspect-ratio: 4/3;
-          border-radius: 12px;
-          overflow: hidden;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-
-        h4 {
-          color: var(--dust-gray);
-          margin: 0.5rem 0;
-          font-size: large;
-          font-weight: 600;
-        }
-
-        div.item-details {
-          display: flex;
-          justify-content: space-between;
-          height: 1.5rem;
-          color: var(--dust-gray);
-
-          div.author {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: small;
-
-            & > div {
-              height: 100%;
-              aspect-ratio: 1/1;
-              border-radius: 50%;
-              overflow: hidden;
-
-              img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-              }
-            }
-          }
-        }
-
-        &:hover {
-          background-color: var(--hunter-green);
-          cursor: pointer;
-        }
-      }
     }
   }
 }
@@ -140,7 +66,7 @@ main {
 /* Responsividade */
 @media (max-width: 1024px) {
   main {
-    padding: 0 2rem;
+    padding: 1rem 2rem;
 
     span {
       max-width: 50%;

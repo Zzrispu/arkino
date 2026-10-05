@@ -54,7 +54,7 @@ div.dropselect-container {
     display: flex;
     align-items: center;
     border: none;
-    padding: 0.25rem 0.75rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 0.5rem;
     transition: background-color 0.1s ease-in-out;
 

@@ -50,7 +50,7 @@ onBeforeMount(() => observer?.disconnect())
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  padding: 0.75rem 4rem;
+  padding: 0.5rem 4rem;
   align-items: center;
   gap: 1rem;
   color: var(--dust-gray);
@@ -59,14 +59,19 @@ onBeforeMount(() => observer?.disconnect())
 
   span#logo {
     color: var(--dust-gray);
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 800;
     letter-spacing: 0.1rem;
   }
 
   nav {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.5rem;
+
+    a {
+      color: var(--dust-gray);
+    }
   }
 
   div#searchbar {
@@ -78,7 +83,6 @@ onBeforeMount(() => observer?.disconnect())
     align-items: center;
     gap: 0.5rem;
     width: 100%;
-    justify-self: end;
 
     input {
       background-color: transparent;
@@ -107,6 +111,7 @@ footer {
   #topbar {
     padding: 0.25rem 1rem;
     grid-template-columns: auto auto;
+    gap: 0.5rem;
 
     div#searchbar {
       grid-column: 1/3;

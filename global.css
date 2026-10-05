@@ -51,3 +51,7 @@ h6 {
   overflow-wrap: break-word;
   line-height: 1;
 }
+
+a {
+  text-decoration: none;
+}
