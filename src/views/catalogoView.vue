@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DropSelect from '@/components/DropSelect.vue'
 import ItemCard from '@/components/ItemCard.vue'
 
 const defaultItem = {
@@ -13,7 +14,18 @@ const defaultItem = {
   <main>
     <h1>Catálogo</h1>
     <div id="container">
-      <section id="filter-section"></section>
+      <section id="filter-section">
+        <div id="orderby-container">
+          <h2>Ordernar por</h2>
+          <DropSelect :list="['teste 1', 'teste 2', 'Um teste maior']" label="Mais recente" />
+        </div>
+        <div id="tags-container">
+          <h2>Tags</h2>
+          <div id="tags-grid">
+            <div v-for="i in 10" class="tag">{{ 'tag' + i }}</div>
+          </div>
+        </div>
+      </section>
       <section id="itens-grid">
         <ItemCard :item="defaultItem" v-for="i in 15" />
       </section>
@@ -37,7 +49,7 @@ main {
 
   div#container {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 300px 1fr;
     gap: 2rem;
     flex: 1;
 
@@ -46,6 +58,40 @@ main {
       min-height: 100px;
       background-color: var(--dry-sage);
       border-radius: 1rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      h2 {
+        color: var(--pine-teal);
+        font-size: large;
+        font-weight: bold;
+      }
+
+      div#orderby-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      div#tags-container {
+        display: grid;
+        gap: 1rem;
+
+        div#tags-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+
+          div.tag {
+            background-color: var(--dust-gray);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            color: var(--hunter-green);
+          }
+        }
+      }
     }
 
     section#itens-grid {

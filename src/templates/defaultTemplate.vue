@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DropSelect from '@/components/DropSelect.vue'
+import DropList from '@/components/DropList.vue'
 import { onBeforeMount, onMounted, useTemplateRef } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
@@ -26,11 +26,11 @@ onBeforeMount(() => observer?.disconnect())
     </RouterLink>
     <nav>
       <RouterLink to="/catalogo">Modelos</RouterLink>
-      <DropSelect
+      <DropList
         label="Materiais"
         :list="['Material 1', 'Material 2', 'Material 3', 'Material 4']"
       />
-      <DropSelect
+      <DropList
         label="Processos"
         :list="['Processo 1', 'Processo 2', 'Processo 3', 'Processo 4']"
       />

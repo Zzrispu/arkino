@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue'
+import { onBeforeUnmount, onMounted, ref, Transition, useTemplateRef } from 'vue'
 
 interface Props {
-  label: string
   list: string[]
 }
 
-const { list = [] } = defineProps<Props>()
+const props = defineProps<Props>()
 
+const activeValue = ref<string>(props.list[0] ?? 'Sem lista')
+const dropselectElement = useTemplateRef<HTMLDivElement>('dropselectElement')
 const isOpen = ref<boolean>(false)
-const dropdownElement = useTemplateRef<HTMLDivElement>('dropdownElement')
 
 const handleClickOutside = (e: MouseEvent) => {
-  if (!isOpen.value) return // se estriver fechado ele não faz nada
-  if (!dropdownElement.value) return // se o dropdownElement não estiver atribuido, também não faz nada
+  if (!isOpen.value || !dropselectElement.value) return
 
   const target = e.target as Node
-  if (!dropdownElement.value.contains(target)) isOpen.value = false
+  if (!dropselectElement.value.contains(target)) isOpen.value = false
+}
+
+const handleClickSelect = (value: string) => {
+  activeValue.value = value
+  isOpen.value = false
 }
 
 onMounted(() => {
@@ -24,75 +28,50 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  document.addEventListener('click', handleClickOutside)
+  document.removeEventListener('click', handleClickOutside)
 })
 </script>
 
 <template>
-  <div class="dropselect-container" ref="dropdownElement">
-    <button @click="isOpen = !isOpen" :class="isOpen ? 'open' : ''">
-      <span>{{ label }}</span>
-      <i class="material-symbols-outlined" :class="isOpen ? 'open' : ''">arrow_drop_down</i>
-    </button>
-
+  <div id="dropselect-container" ref="dropselectElement">
+    <button @click="isOpen = !isOpen">{{ activeValue }}</button>
     <Transition name="slide">
       <ul v-if="isOpen">
-        <span v-if="list.length < 1">Não há itens na lista</span>
-        <li v-else v-for="(item, index) in list" :key="index">{{ item }}</li>
+        <li v-for="(item, i) in list" :key="i" @click="handleClickSelect(item)">{{ item }}</li>
       </ul>
     </Transition>
   </div>
 </template>
 
 <style scoped>
-div.dropselect-container {
+div#dropselect-container {
   position: relative;
 
   button {
-    color: var(--dust-gray);
-    background-color: transparent;
-    display: flex;
-    align-items: center;
     border: none;
-    padding: 0.25rem 0.5rem;
     border-radius: 0.5rem;
-    transition: background-color 0.1s ease-in-out;
-
-    &:hover {
-      background-color: var(--fern);
-      cursor: pointer;
-    }
-
-    &.open {
-      background-color: var(--fern);
-
-      i {
-        transform: rotate(180deg);
-      }
-    }
-
-    i {
-      transform: rotate(0);
-      transition: transform 0.1s ease-in-out;
-    }
+    background-color: var(--fern);
+    padding: 0.5rem 1rem;
+    color: var(--dust-gray);
   }
 
   ul {
     position: absolute;
     background-color: var(--fern);
-    padding: 0.5rem;
+    top: calc(100% + 0.5rem);
+    min-width: 100%;
     border-radius: 0.5rem;
-    top: calc(100% + 1rem);
-    width: 100%;
-    display: grid;
+    padding: 0.25rem;
     gap: 0.1rem;
+    right: 0;
     interpolate-size: allow-keywords;
     overflow: hidden;
 
     li {
-      padding: 0.5rem;
-      border-radius: 0.4rem;
-      transition: background-color 0.1s ease-in-out;
+      color: var(--dust-gray);
+      padding: 0.25rem 0.5rem;
+      white-space: nowrap;
+      border-radius: 0.3rem;
 
       &:hover {
         background-color: var(--hunter-green);
