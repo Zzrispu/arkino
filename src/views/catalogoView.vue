@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import DropSelect from '@/components/DropSelect.vue'
 import ItemCard from '@/components/ItemCard.vue'
+import { reactive } from 'vue'
 
 const defaultItem = {
   name: 'nome do item',
   author_name: 'autor do item',
   thumbnail_url: '/src/assets/imgs/place-holder.jpg',
   author_profile_url: '/src/assets/imgs/place-holder.jpg',
+}
+
+const activeTags = reactive(new Set())
+
+const toggleTagActive = (value: string) => {
+  if (activeTags.has(value)) activeTags.delete(value)
+  else activeTags.add(value)
 }
 </script>
 
@@ -22,7 +30,15 @@ const defaultItem = {
         <div id="tags-container">
           <h2>Tags</h2>
           <div id="tags-grid">
-            <div v-for="i in 10" class="tag">{{ 'tag' + i }}</div>
+            <div
+              v-for="i in 10"
+              :key="`tag-${i}`"
+              class="tag"
+              :class="{ active: activeTags.has(`tag-${i}`) }"
+              @click="toggleTagActive(`tag-${i}`)"
+            >
+              {{ 'tag ' + i }}
+            </div>
           </div>
         </div>
       </section>
@@ -54,11 +70,10 @@ main {
     flex: 1;
 
     section#filter-section {
-      min-width: 300px;
-      min-height: 100px;
+      height: fit-content;
       background-color: var(--dry-sage);
       border-radius: 1rem;
-      padding: 1rem;
+      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -89,6 +104,16 @@ main {
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             color: var(--hunter-green);
+
+            &:hover {
+              background-color: var(--fern);
+              cursor: pointer;
+            }
+          }
+
+          div.active {
+            background-color: var(--fern);
+            color: var(--dust-gray);
           }
         }
       }
@@ -115,6 +140,10 @@ main {
     div#container {
       grid-template-columns: auto;
       grid-template-rows: auto 1fr;
+
+      section#filter-section {
+        padding: 1rem;
+      }
     }
   }
 }
